@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { RoutingModule } from './routing/routing.module';
+import { AppRoutingModule } from './app.routing.module';
 
 import { AppComponent } from './app.component';
 import { PersonaComponent } from './persona/persona.component';
@@ -20,7 +20,7 @@ import { Persona } from './persona';
   ],
   imports: [
     BrowserModule,
-    RoutingModule
+    AppRoutingModule
   ],
   providers: [PersonaService, DataService],
   bootstrap: [AppComponent]

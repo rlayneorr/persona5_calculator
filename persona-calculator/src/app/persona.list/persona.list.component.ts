@@ -6,8 +6,8 @@ import { PersonaService } from '../persona.service';
 
 @Component({
   selector: 'app-persona-list',
-  templateUrl: './persona-list.component.html',
-  styleUrls: ['./persona-list.component.css']
+  templateUrl: './persona.list.component.html',
+  styleUrls: ['./persona.list.component.css']
 })
 export class PersonaListComponent implements OnInit {
   public personas: Persona[];
