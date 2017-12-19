@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { CommonModule } from '@angular/common';
+
 import { PersonaListComponent } from './persona.list/persona.list.component';
 import { PersonaComponent } from './persona/persona.component';
 
@@ -24,6 +26,6 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes)
   ],
-  declarations: [RouterModule]
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

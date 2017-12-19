@@ -15,7 +15,9 @@ export class PersonaService {
   }
 
   getPersona(p: string): Observable<Persona> {
-    return Observable.of(personaMap[p]);
+    console.log(p);
+    const persona = personaMap.find( pers => pers.name === p );
+    return Observable.of(persona);
   }
 
 }

@@ -12,8 +12,7 @@ import { PersonaService } from '../persona.service';
 export class PersonaListComponent implements OnInit {
   public personas: Persona[];
   constructor(
-    private personaService: PersonaService,
-    private dataService: DataService
+    private personaService: PersonaService
   ) { }
 
   ngOnInit() {

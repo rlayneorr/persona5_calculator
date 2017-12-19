@@ -1,3 +1,38 @@
-<p>
-  persona works!
-</p>
+<ng-container *ngIf="persona">
+  <h3>{{ persona.name }} </h3>
+  <h4>{{ persona.arcana + ' ' + persona.level }} </h4>
+</ng-container>
+
+<table>
+  <thead>
+    <th>Stat</th>
+    <th>Value</th>
+    <th>Possible</th>
+  </thead>
+  <tr>
+    <th>Strength</th>
+    <td>{{ persona.stats[0] }} </td>
+    <td>{{ maxStat(persona.stats[0]) }} </td>
+  </tr>
+  <tr>
+    <th>Magic</th>
+    <td>{{ persona.stats[1] }} </td>
+    <td>{{ maxStat(persona.stats[1]) }} </td>
+  </tr>
+  <tr>
+    <th>Endurance</th>
+    <td>{{ persona.stats[2] }} </td>
+    <td>{{ maxStat(persona.stats[2]) }} </td>
+  </tr>
+  <tr>
+    <th>Agility</th>
+    <td>{{ persona.stats[3] }} </td>
+    <td>{{ maxStat(persona.stats[3]) }} </td>
+  </tr>
+  <tr>
+    <th>Luck</th>
+    <td>{{ persona.stats[4] }} </td>
+    <td>{{ maxStat(persona.stats[4]) }} </td>
+  </tr>
+</table>
+<button (click)="goBack()">Back</button>
