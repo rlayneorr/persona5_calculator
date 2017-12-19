@@ -1,3 +1,31 @@
-<ul>
-  <li *ngFor="let p of personas"><a [routerLink]="['/persona',p.name]">{{p.name}}</a></li>
-</ul>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Arcana</th>
+      <th>St</th>
+      <th>Ma</th>
+      <th>En</th>
+      <th>Ag</th>
+      <th>Lu</th>
+      <th>Phys</th>
+      <th>Gun</th>
+      <th>Fire</th>
+      <th>Ice</th>
+      <th>Elec</th>
+      <th>Wind</th>
+      <th>Psi</th>
+      <th>Nuke</th>
+      <th>Bless</th>
+      <th>Curse</th>
+    </tr>
+  </thead>
+  <tr *ngFor="let p of personas">
+    <td>
+      <a [routerLink]="['/persona',p.name]">{{p.name}}</a>
+    </td>
+    <td> {{ p.arcana }} </td>
+    <td *ngFor="let s of p.stats">{{ s }}</td>
+    <td *ngFor="let w of p.elems">{{ w }}</td>
+  </tr>
+  <table>
