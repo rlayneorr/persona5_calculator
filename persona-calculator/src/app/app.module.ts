@@ -8,10 +8,12 @@ import { PersonaListComponent } from './persona.list/persona.list.component';
 
 import { PersonaService } from './persona.service';
 import { DataService } from './data.service';
+import { FusionService } from './fusion.service';
 import { Persona } from './persona';
 import { AppRoutingModule } from './app-routing.module';
 import { PersonaPipe } from './persona.pipe';
 import { FusionListComponent } from './fusion-list/fusion-list.component';
+import { RecipeComponent } from './recipe/recipe.component';
 
 
 @NgModule({
@@ -21,13 +23,14 @@ import { FusionListComponent } from './fusion-list/fusion-list.component';
     PersonaListComponent,
     PersonaPipe,
     FusionListComponent,
+    RecipeComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule
   ],
-  providers: [PersonaService, DataService],
+  providers: [PersonaService, DataService, FusionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Persona } from '../persona';
+import { Recipe } from '../recipe';
 import { PersonaService } from '../persona.service';
+import { FusionService } from '../fusion.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 @Component({
@@ -14,6 +16,7 @@ export class PersonaComponent implements OnInit {
 
   constructor(
     private personaService: PersonaService,
+    private fusionService: FusionService,
     private route: ActivatedRoute,
     private router: Router
   ) { }

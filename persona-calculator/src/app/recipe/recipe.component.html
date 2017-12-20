@@ -1,0 +1,3 @@
+<p>{{ recipe.result.name + ' (' + recipe.result.arcana +' '+recipe.result.level+') |' }}
+  <span *ngFor="let s of recipe.sources">{{ s.name + ' (' + s.arcana +' '+s.level+') '}}</span>
+</p>

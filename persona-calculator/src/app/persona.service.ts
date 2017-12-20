@@ -15,11 +15,13 @@ export class PersonaService {
   }
 
   getPersona(p: string): Observable<Persona> {
-    console.log(p);
     const persona = personaMap.find( pers => pers.name === p );
     return Observable.of(persona);
   }
 
+  getPersonaByArcana(a: string): Observable<Persona[]> {
+    return Observable.of(personaMap.filter( p => p.arcana === a));
+  }
 }
 
 const personaMap: Persona[] = [

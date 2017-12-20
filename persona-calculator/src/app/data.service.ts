@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { Persona } from './persona';
+
 @Injectable()
 export class DataService {
 
@@ -9,11 +11,21 @@ export class DataService {
   getRarePersonae(): Observable<string[]> {
     return Observable.of(rarePersonae);
   }
-  getRareCombos(): Observable<any> {
-    return Observable.of(rareCombos);
+  getRareCombos(rare: Persona, main: Persona): Observable<number> {
+    const result = rareCombos[main.arcana][rarePersonae.indexOf(rare.name)];
+    return Observable.of(result);
   }
-  getTwoCombos(): Observable<any[]> {
-    return Observable.of(arcana2Combos);
+  getTwoCombos(a1: string, a2: string): Observable<string> {
+    const result = arcana2Combos.find( combo => {
+      const s1 = combo.source[0];
+      const s2 = combo.source[1];
+      if ( (a1 === s1 && a2 === s2) || (a1 === s2 && a2 === s1) ) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    return Observable.of(result.result);
   }
   getSpecialCombos(): Observable<any[]> {
     return Observable.of(specialCombos);
