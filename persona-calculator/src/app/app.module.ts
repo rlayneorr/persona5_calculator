@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -9,6 +10,7 @@ import { PersonaService } from './persona.service';
 import { DataService } from './data.service';
 import { Persona } from './persona';
 import { AppRoutingModule } from './app-routing.module';
+import { PersonaPipe } from './persona.pipe';
 
 
 @NgModule({
@@ -16,10 +18,12 @@ import { AppRoutingModule } from './app-routing.module';
     AppComponent,
     PersonaComponent,
     PersonaListComponent,
+    PersonaPipe,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [PersonaService, DataService],
   bootstrap: [AppComponent]

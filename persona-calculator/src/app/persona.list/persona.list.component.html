@@ -1,26 +1,27 @@
+<input type="text" [(ngModel)]="search">
 <table>
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Arcana</th>
-      <th>St</th>
-      <th>Ma</th>
-      <th>En</th>
-      <th>Ag</th>
-      <th>Lu</th>
-      <th>Phys</th>
-      <th>Gun</th>
-      <th>Fire</th>
-      <th>Ice</th>
-      <th>Elec</th>
-      <th>Wind</th>
-      <th>Psi</th>
-      <th>Nuke</th>
-      <th>Bless</th>
-      <th>Curse</th>
+      <th>Name <button (click)="sortByName()">{{ asc ? 'v' : '^'}}</button></th>
+      <th>Arcana <button (click)="sortByArcana()">{{ asc ? 'v' : '^'}}</button></th>
+      <th>St <button (click)="sortByStat(0)">{{ asc ? 'v' : '^'}}</button></th>
+      <th>Ma <button (click)="sortByStat(1)">{{ asc ? 'v' : '^'}}</button></th>
+      <th>En <button (click)="sortByStat(2)">{{ asc ? 'v' : '^'}}</button></th>
+      <th>Ag <button (click)="sortByStat(3)">{{ asc ? 'v' : '^'}}</button></th>
+      <th>Lu <button (click)="sortByStat(4)">{{ asc ? 'v' : '^'}}</button></th>
+      <th>Phys <button (click)="sortByElem(0)">{{ asc ? 'v' : '^'}}</button></th>
+      <th>Gun <button (click)="sortByElem(1)">{{ asc ? 'v' : '^'}}</button></th>
+      <th>Fire <button (click)="sortByElem(2)">{{ asc ? 'v' : '^'}}</button></th>
+      <th>Ice <button (click)="sortByElem(3)">{{ asc ? 'v' : '^'}}</button></th>
+      <th>Elec <button (click)="sortByElem(4)">{{ asc ? 'v' : '^'}}</button></th>
+      <th>Wind <button (click)="sortByElem(5)">{{ asc ? 'v' : '^'}}</button></th>
+      <th>Psi <button (click)="sortByElem(6)">{{ asc ? 'v' : '^'}}</button></th>
+      <th>Nuke <button (click)="sortByElem(7)">{{ asc ? 'v' : '^'}}</button></th>
+      <th>Bless <button (click)="sortByElem(8)">{{ asc ? 'v' : '^'}}</button></th>
+      <th>Curse <button (click)="sortByElem(9)">{{ asc ? 'v' : '^'}}</button></th>
     </tr>
   </thead>
-  <tr *ngFor="let p of personas">
+  <tr *ngFor="let p of personas | persona: search">
     <td>
       <a [routerLink]="['/persona',p.name]">{{p.name}}</a>
     </td>
