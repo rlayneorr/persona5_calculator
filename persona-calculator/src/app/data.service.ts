@@ -1,51 +1,61 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class DataService {
 
   constructor() { }
 
-  getRarePersonae(): string[] {
-    return rarePersonae;
+  getRarePersonae(): Observable<string[]> {
+    return Observable.of(rarePersonae);
   }
-  getRareCombos() {
-    return rareCombos;
+  getRareCombos(): Observable<any> {
+    return Observable.of(rareCombos);
   }
-  getTwoCombos(): any [] {
-    return arcana2Combos;
+  getTwoCombos(): Observable<any[]> {
+    return Observable.of(arcana2Combos);
   }
-  getSpecialCombos(): any[] {
-    return specialCombos;
+  getSpecialCombos(): Observable<any[]> {
+    return Observable.of(specialCombos);
   }
-  getDlcPersona() {
-    return dlcPersona;
+  getDlcPersona(): Observable<any[]> {
+    return Observable.of(dlcPersona);
   }
 }
 
-const rarePersonae = ["Regent", "Queen's Necklace", "Stone of Scone", "Koh-i-Noor", "Orlov", "Emperor's Amulet", "Hope Diamond", "Crystal Skull"];
+const rarePersonae = [
+  'Regent',
+  'Queen\'s Necklace',
+  'Stone of Scone',
+  'Koh-i-Noor',
+  'Orlov',
+  'Emperor\'s Amulet',
+  'Hope Diamond',
+  'Crystal Skull'
+];
 
 const rareCombos = {
-  "Fool":       [-1, +1, -1, +1, -1, -1, +1, +2],
-  "Magician":   [+1, -1, +2, -1, +1, +1, +1, +1],
-  "Priestess":  [-1, +1, -1, +2, +1, -1, +1, +1],
-  "Empress":    [-1, +2, -1, +1, +1, +1, -1, +1],
-  "Emperor":    [+2, -1, +1, -1, -1, +1, +1, -1],
-  "Hierophant": [+1, -1, +1, -2, +1, -1, -1, -1],
-  "Lovers":     [-1, +1, -1, +1, -1, -1, -2, +1],
-  "Chariot":    [+1, -1, +1, -1, +1, -2, -1, -1],
-  "Justice":    [+1, -1, -1, +2, +1, +1, -1, +1],
-  "Hermit":     [+2, -1, -1, +1, +1, +1, +1, -2],
-  "Fortune":    [+1, -1, +2, -1, -2, -1, +1, -1],
-  "Strength":   [-1, +1, -2, +1, +1, +1, -1, -1],
-  "Hanged Man": [+1, +1, -1, -1, +1, +2, -1, -1],
-  "Death":      [+1, -1, +1, +1, -1, -1, +2, +1],
-  "Temperance": [-1, +1, -1, -1, +1, +1, -1, +2],
-  "Devil":      [-2, +1, -1, +1, +1, +2, -1, -1],
-  "Tower":      [-1, -2, +1, +1, +1, +1, -1, -1],
-  "Star":       [+1, -1, +1, -1, +1, -1, +1, +1],
-  "Moon":       [-1, +2, +1, -1, +1, -1, -1, -1],
-  "Sun":        [+1, -1, -1, +1, +1, -1, +2, +1],
-  "Judgement":  [-1, -1, +1, -1, +1, +1, -1, -1]
+  'Fool':       [-1, +1, -1, +1, -1, -1, +1, +2],
+  'Magician':   [+1, -1, +2, -1, +1, +1, +1, +1],
+  'Priestess':  [-1, +1, -1, +2, +1, -1, +1, +1],
+  'Empress':    [-1, +2, -1, +1, +1, +1, -1, +1],
+  'Emperor':    [+2, -1, +1, -1, -1, +1, +1, -1],
+  'Hierophant': [+1, -1, +1, -2, +1, -1, -1, -1],
+  'Lovers':     [-1, +1, -1, +1, -1, -1, -2, +1],
+  'Chariot':    [+1, -1, +1, -1, +1, -2, -1, -1],
+  'Justice':    [+1, -1, -1, +2, +1, +1, -1, +1],
+  'Hermit':     [+2, -1, -1, +1, +1, +1, +1, -2],
+  'Fortune':    [+1, -1, +2, -1, -2, -1, +1, -1],
+  'Strength':   [-1, +1, -2, +1, +1, +1, -1, -1],
+  'Hanged Man': [+1, +1, -1, -1, +1, +2, -1, -1],
+  'Death':      [+1, -1, +1, +1, -1, -1, +2, +1],
+  'Temperance': [-1, +1, -1, -1, +1, +1, -1, +2],
+  'Devil':      [-2, +1, -1, +1, +1, +2, -1, -1],
+  'Tower':      [-1, -2, +1, +1, +1, +1, -1, -1],
+  'Star':       [+1, -1, +1, -1, +1, -1, +1, +1],
+  'Moon':       [-1, +2, +1, -1, +1, -1, -1, -1],
+  'Sun':        [+1, -1, -1, +1, +1, -1, +2, +1],
+  'Judgement':  [-1, -1, +1, -1, +1, +1, -1, -1]
 };
 
 const arcana2Combos = [
@@ -302,7 +312,7 @@ const specialCombos = [
     {'result': 'Yoshitsune', 'sources': ['Okuninushi', 'Shiki-Ouji', 'Arahabaki', 'Yatagarasu', 'Futsunushi']}
 ];
 
-const dlcPersona = [["Orpheus", "Orpheus Picaro"], ["Izanagi", "Izanagi Picaro"], ["Thanatos", "Thanatos Picaro"],
-    ["Magatsu-Izanagi", "Magatsu-Izanagi Picaro"], ["Kaguya", "Kaguya Picaro"], ["Ariadne", "Ariadne Picaro"],
-    ["Asterius", "Asterius Picaro"], ["Tsukiyomi", "Tsukiyomi Picaro"], ["Messiah", "Messiah Picaro"]];
+const dlcPersona = [['Orpheus', 'Orpheus Picaro'], ['Izanagi', 'Izanagi Picaro'], ['Thanatos', 'Thanatos Picaro'],
+    ['Magatsu-Izanagi', 'Magatsu-Izanagi Picaro'], ['Kaguya', 'Kaguya Picaro'], ['Ariadne', 'Ariadne Picaro'],
+    ['Asterius', 'Asterius Picaro'], ['Tsukiyomi', 'Tsukiyomi Picaro'], ['Messiah', 'Messiah Picaro']];
 

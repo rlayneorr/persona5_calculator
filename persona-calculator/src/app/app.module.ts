@@ -11,6 +11,7 @@ import { DataService } from './data.service';
 import { Persona } from './persona';
 import { AppRoutingModule } from './app-routing.module';
 import { PersonaPipe } from './persona.pipe';
+import { FusionListComponent } from './fusion-list/fusion-list.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { PersonaPipe } from './persona.pipe';
     PersonaComponent,
     PersonaListComponent,
     PersonaPipe,
+    FusionListComponent,
   ],
   imports: [
     BrowserModule,

@@ -10,6 +10,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 })
 export class PersonaComponent implements OnInit {
   public persona: Persona;
+  public level: number;
 
   constructor(
     private personaService: PersonaService,
@@ -20,7 +21,10 @@ export class PersonaComponent implements OnInit {
   ngOnInit() {
     const persona = this.route.snapshot.paramMap.get('persona');
     this.personaService.getPersona(persona).subscribe(
-      p => this.persona = p
+      p => {
+        this.persona = p;
+        this.level = p.level;
+      }
     );
   }
 
