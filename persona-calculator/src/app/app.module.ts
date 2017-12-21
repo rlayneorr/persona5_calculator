@@ -17,6 +17,7 @@ import { RecipeComponent } from './recipe/recipe.component';
 import { FuseSelectionComponent } from './fuse-selection/fuse-selection.component';
 import { SkillComponent } from './skill/skill.component';
 import { SkillService } from './skill.service';
+import { SkillListComponent } from './skill-list/skill-list.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { SkillService } from './skill.service';
     RecipeComponent,
     FuseSelectionComponent,
     SkillComponent,
+    SkillListComponent,
   ],
   imports: [
     BrowserModule,

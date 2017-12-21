@@ -13,6 +13,7 @@ export class SkillComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.skill);
   }
 
   getPersonas(): any[] {

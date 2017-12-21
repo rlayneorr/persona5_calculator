@@ -1,0 +1,6 @@
+<div *ngIf="skills">
+  <h2>Skills</h2>
+  <div *ngFor="let s of skills">
+    <app-skill [skill]="s"></app-skill>
+  </div>
+</div>
