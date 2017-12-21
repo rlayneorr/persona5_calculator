@@ -36,6 +36,10 @@
     </tr>
   </table>
   <input type="number" [(ngModel)]="persona.level">
+  <div *ngIf="skills">
+  <h4>Skills</h4>
+  <app-skill *ngFor="let s of skills" [skill]="s" [persona]="persona"></app-skill>
+</div>
   <app-fusion-list [persona]="persona"></app-fusion-list>
 </ng-container>
 <button (click)="goBack()">Back</button>

@@ -3,6 +3,8 @@ import { Persona } from '../persona';
 import { Recipe } from '../recipe';
 import { PersonaService } from '../persona.service';
 import { FusionService } from '../fusion.service';
+import { SkillService } from '../skill.service';
+import { Skill } from '../skill';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 @Component({
@@ -12,22 +14,31 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 })
 export class PersonaComponent implements OnInit {
   @Input() public persona: Persona;
+  public skills: Skill[];
   public level: number;
 
   constructor(
     private personaService: PersonaService,
     private fusionService: FusionService,
+    private skillService: SkillService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
 
   ngOnInit() {
     const persona = this.route.snapshot.paramMap.get('persona');
+    this.skills = [];
     if (persona) {
       this.personaService.getPersona(persona).subscribe(
         p => {
           this.persona = p;
           this.level = p.level;
+          const skills = Object.getOwnPropertyNames(this.persona.skills);
+          skills.forEach(s => 
+            this.skillService.getSkill(s).subscribe(
+              skill => this.skills.push(skill)
+            )
+          )
         }
       );
     }

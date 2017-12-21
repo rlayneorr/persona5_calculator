@@ -1,10 +1,19 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Skill } from './skill';
+
 @Injectable()
 export class SkillService {
 
   constructor() { }
 
+  getSkills(): Observable<Skill[]> {
+    return Observable.of(skills);
+  }
+
+  getSkill(skill: string): Observable<Skill> {
+    return Observable.of(skills.find(s => skill === s.name));
+  }
 }
 
 const skills: Skill[] = [

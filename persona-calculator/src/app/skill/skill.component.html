@@ -1,3 +1,9 @@
-<p>
-  skill works!
-</p>
+<h5>{{ skill.name }}:</h5> {{ skill.element }} | {{ skill.effect }} |
+<ng-container *ngIf="persona; else personas">
+ Level: {{skill.personas[persona.name]}}
+</ng-container>
+<ng-template #personas>
+<div *ngFor="let p of getPersonas()">
+  {{p.name +'| '+p.level}}
+</div>
+</ng-template>

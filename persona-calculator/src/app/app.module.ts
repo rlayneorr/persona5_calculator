@@ -16,6 +16,7 @@ import { FusionListComponent } from './fusion-list/fusion-list.component';
 import { RecipeComponent } from './recipe/recipe.component';
 import { FuseSelectionComponent } from './fuse-selection/fuse-selection.component';
 import { SkillComponent } from './skill/skill.component';
+import { SkillService } from './skill.service';
 
 
 @NgModule({
@@ -34,7 +35,7 @@ import { SkillComponent } from './skill/skill.component';
     AppRoutingModule,
     FormsModule
   ],
-  providers: [PersonaService, DataService, FusionService],
+  providers: [PersonaService, DataService, FusionService, SkillService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
