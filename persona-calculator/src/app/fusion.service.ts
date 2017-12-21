@@ -8,8 +8,8 @@ import { PersonaService } from './persona.service';
 
 @Injectable()
 export class FusionService implements OnInit {
-  private personaByArcana: Persona[] = [];
   private specialFusions = [];
+  private rarePersona: string[];
 
   constructor(
     private dataService: DataService,
@@ -20,6 +20,9 @@ export class FusionService implements OnInit {
     this.dataService.getSpecialCombos().subscribe(
       specials => this.specialFusions = specials
     );
+    this.dataService.getRarePersonae().subscribe(
+      personas => this.rarePersona = personas
+    );
   }
   /**
    * Fuse 2 persona. This can handle normal fusion, rare fusion or special fusion.
@@ -28,6 +31,9 @@ export class FusionService implements OnInit {
    * @returns {Persona} the result of the fusion or null
    */
   fuse(p1: Persona, p2: Persona): Persona {
+    if (p1.name === p2.name) {
+      return null;
+    }
     // special
     const result = this.getSpecialFuseResult(p1, p2);
     if (result !== null) {
@@ -207,123 +213,139 @@ export class FusionService implements OnInit {
 
     return cost;
   }
+
+  /**
+ * Get the list of all recipes for the given persona
+ * @param persona The resulting persona
+ * @returns {Array} List of all recipes for the given persona
+ */
+  public getRecipes(persona: Persona): Recipe[] {
+    const allRecipe = [];
+    // Rare persona can't be fused
+    if (persona.rare) {
+      return allRecipe;
+    }
+
+    // Check special recipes.
+    if (persona.special) {
+      return this.getSpecialRecipe(persona);
+    }
+
+    let recipes = this.getArcanaRecipes(persona.arcana);
+    recipes = recipes.filter((value, index, array) => {
+      return this.isGoodRecipe(value, persona);
+    });
+    for (let i = 0; i < recipes.length; i++) {
+      this.addRecipe(recipes[i], allRecipe, true);
+    }
+
+    return allRecipe;
+  }
+  /**
+ * Get the recipe for a special persona
+ * @param persona The special persona
+ * @returns {Array} An array of 1 element containing the recipe for the persona
+ */
+  private getSpecialRecipe(persona: Persona): Recipe[] {
+    if (!persona.special) {
+      throw new Error('Persona is not special!)');
+    }
+    const allRecipe = [];
+    for (let i = 0; i < this.specialFusions.length; i++) {
+      const combo = this.specialFusions[i];
+      this.personaService.getPersonas().subscribe(personas => {
+        if (persona.name === combo.result) {
+          const recipe = {
+            sources: [],
+            result: personas[combo.result]
+          };
+          for (let j = 0; j < combo.sources.length; j++) {
+            recipe.sources.push(personas[combo.sources[j]]);
+          }
+          this.addRecipe(recipe, allRecipe, true);
+        }
+      });
+      return allRecipe;
+    }
+  }
+  /**
+ * Get all recipes that result in a persona in the given arcana
+ * @param arcana The result arcana
+ * @returns {Array} the list of recipes
+ */
+  private getArcanaRecipes(arcana: string): Recipe[] {
+    const recipes: Recipe[] = [];
+    this.dataService.getCombosByResult(arcana).subscribe(
+      arcanaCombos => {
+        // fuse 2 persona normally (including down-rank)
+        for (let i = 0, combo = null; combo = arcanaCombos[i]; i++) {
+          const personae1 = this.personaByArcana[combo.source[0]];
+          const personae2 = this.personaByArcana[combo.source[1]];
+          for (let j = 0, persona1 = null; persona1 = personae1[j]; j++) {
+            for (let k = 0, persona2 = null; persona2 = personae2[k]; k++) {
+              // for same arcana fusion only consider k > j to avoid duplicates
+              if (persona1.arcana === persona2.arcana && k <= j) {
+                continue;
+              }
+              // rare fusion will be handled separately
+              if ((persona1.rare && !persona2.rare) || (persona2.rare && !persona1.rare)) {
+                continue;
+              }
+              const result = this.fuseNormal(persona1, persona2);
+              if (!result) {
+                continue;
+              }
+              recipes.push({
+                sources: [persona1, persona2],
+                result: result
+              });
+            }
+          }
+        }
+
+        // rare fusion where one persona is a rare one and the other is a normal one
+        for (let i = 0; i < this.rarePersona.length; i++) {
+          this.personaService.getPersona(this.rarePersona[i]).subscribe(
+            rarePersona => {
+              this.personaService.getPersonaByArcana(arcana).subscribe(personas => {
+                for (let j = 0; j < personas.length; j++) {
+                  const mainPersona = personas[j];
+                  if (rarePersona === mainPersona) {
+                    continue;
+                  }
+                  const result = this.fuseRare(rarePersona, mainPersona);
+                  if (!result) {
+                    continue;
+                  }
+                  recipes.push({
+                    sources: [rarePersona, mainPersona],
+                    result: result
+                  });
+                }
+              });
+            });
+        }
+      }
+    );
+
+    return recipes;
+  }
+
+  /**
+ * Return true if the given recipe is good for the expected result.
+ * A recipe is good if the sources are different from the expected result,
+ * and the actual result is the same as the expected result.
+ * @param recipe The recipe to check
+ * @param expectedResult The expected resulting persona
+ * @returns {boolean} true if the recipe is good for the given persona, false otherwise
+ */
+  private isGoodRecipe(recipe: Recipe, expectedResult: Persona): boolean {
+    if (recipe.sources[0].name === expectedResult.name) {
+      return false;
+    }
+    if (recipe.sources[1].name === expectedResult.name) {
+      return false;
+    }
+    return recipe.result.name === expectedResult.name;
+  }
 }
-
-    /**
-     * Get the recipe for a special persona
-     * @param persona The special persona
-     * @returns {Array} An array of 1 element containing the recipe for the persona
-     */
-//     private getSpecialRecipe(persona: PersonaData): Recipe[] {
-//   if (!persona.special) {
-//     throw new Error("Persona is not special!)");
-//   }
-//   let allRecipe = [];
-//   for (let i = 0; i < specialCombos.length; i++) {
-//     let combo = specialCombos[i];
-//     if (persona.name === combo.result) {
-//       let recipe = {
-//         sources: [],
-//         result: personaMap[combo.result]
-//       };
-//       for (let j = 0; j < combo.sources.length; j++) {
-//         recipe.sources.push(personaMap[combo.sources[j]]);
-//       }
-//       this.addRecipe(recipe, allRecipe, true);
-//       return allRecipe;
-//     }
-//   }
-// }
-
-    /**
-     * Get the list of all recipes for the given persona
-     * @param persona The resulting persona
-     * @returns {Array} List of all recipes for the given persona
-     */
-  //   public getRecipes(persona: PersonaData): Recipe[] {
-  // let allRecipe = [];
-  // // Rare persona can't be fused
-  // if (persona.rare) {
-  //   return allRecipe;
-  // }
-
-  // Check special recipes.
-//   if (persona.special) {
-//     return this.getSpecialRecipe(persona);
-//   }
-
-//   let recipes = this.getArcanaRecipes(persona.arcana);
-//   recipes = recipes.filter((value, index, array) => {
-//     return this.isGoodRecipe(value, persona);
-//   });
-//   for (let i = 0; i < recipes.length; i++) {
-//     this.addRecipe(recipes[i], allRecipe, true);
-//   }
-
-//   return allRecipe;
-// }
-
-//     /**
-//      * Return true if the given recipe is good for the expected result.
-//      * A recipe is good if the sources are different from the expected result,
-//      * and the actual result is the same as the expected result.
-//      * @param recipe The recipe to check
-//      * @param expectedResult The expected resulting persona
-//      * @returns {boolean} true if the recipe is good for the given persona, false otherwise
-//      */
-//     private isGoodRecipe(recipe: Recipe, expectedResult: PersonaData): boolean {
-//   if (recipe.sources[0].name === expectedResult.name) return false;
-//   if (recipe.sources[1].name === expectedResult.name) return false;
-//   return recipe.result.name === expectedResult.name;
-// }
-
-//     /**
-//      * Get all recipes that result in a persona in the given arcana
-//      * @param arcana The result arcana
-//      * @returns {Array} the list of recipes
-//      */
-//     private getArcanaRecipes(arcana: string): Recipe[] {
-//   let recipes: Recipe[] = [];
-//   let arcanaCombos = arcana2Combos.filter(x => x.result === arcana);
-
-//   // fuse 2 persona normally (including down-rank)
-//   for (let i = 0, combo = null; combo = arcanaCombos[i]; i++) {
-//     let personae1 = this.personaeByArcana[combo.source[0]];
-//     let personae2 = this.personaeByArcana[combo.source[1]];
-//     for (let j = 0, persona1 = null; persona1 = personae1[j]; j++) {
-//       for (let k = 0, persona2 = null; persona2 = personae2[k]; k++) {
-//         // for same arcana fusion only consider k > j to avoid duplicates
-//         if (persona1.arcana === persona2.arcana && k <= j) continue;
-
-//         // rare fusion will be handled separately
-//         if (persona1.rare && !persona2.rare) continue;
-//         if (persona2.rare && !persona1.rare) continue;
-
-//         let result = this.fuseNormal(persona1, persona2);
-//         if (!result) continue;
-//         recipes.push({
-//           sources: [persona1, persona2],
-//           result: result
-//         });
-//       }
-//     }
-//   }
-
-//   // rare fusion where one persona is a rare one and the other is a normal one
-//   for (let i = 0; i < rarePersonae.length; i++) {
-//     let rarePersona = personaMap[rarePersonae[i]];
-//     let personae = this.personaeByArcana[arcana];
-//     for (let j = 0; j < personae.length; j++) {
-//       let mainPersona = personae[j];
-//       if (rarePersona === mainPersona) continue;
-//       let result = this.fuseRare(rarePersona, mainPersona);
-//       if (!result) continue;
-//       recipes.push({
-//         sources: [rarePersona, mainPersona],
-//         result: result
-//       });
-//     }
-//   }
-
-//   return recipes;
-// }

@@ -1,0 +1,19 @@
+<div *ngIf="personas">Persona 1:
+  <select ngModel (ngModelChange)="addP1($event)">
+    <option *ngFor="let p of personas" [ngValue]="p">{{p.name}}</option>
+  </select>
+  <div *ngIf="p1">
+    Level:
+    <input type="number" [(ngModel)]="p1.level"> </div>
+  <br>Persona 2:
+  <select ngModel (ngModelChange)="addP2($event)">
+    <option *ngFor="let p of personas" [ngValue]="p">{{p.name}}</option>
+  </select>
+  <div *ngIf="p2">
+    Level:
+    <input type="number" [(ngModel)]="p2.level">
+  </div>
+</div>
+<div *ngIf="p1 && p2">
+  <app-persona [persona]="fuse(p1, p2)"></app-persona>
+</div>

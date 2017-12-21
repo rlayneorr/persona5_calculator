@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { PersonaPipe } from './persona.pipe';
 import { FusionListComponent } from './fusion-list/fusion-list.component';
 import { RecipeComponent } from './recipe/recipe.component';
+import { FuseSelectionComponent } from './fuse-selection/fuse-selection.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { RecipeComponent } from './recipe/recipe.component';
     PersonaPipe,
     FusionListComponent,
     RecipeComponent,
+    FuseSelectionComponent,
   ],
   imports: [
     BrowserModule,

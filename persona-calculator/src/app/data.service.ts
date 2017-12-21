@@ -27,6 +27,10 @@ export class DataService {
     });
     return Observable.of(result.result);
   }
+  getCombosByResult(arcana: string): Observable<any[]> {
+    const result = arcana2Combos.filter( combo => combo.result === arcana);
+    return Observable.of(result);
+  }
   getSpecialCombos(): Observable<any[]> {
     return Observable.of(specialCombos);
   }

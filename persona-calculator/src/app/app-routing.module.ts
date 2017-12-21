@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 
 import { PersonaListComponent } from './persona.list/persona.list.component';
 import { PersonaComponent } from './persona/persona.component';
+import { FuseSelectionComponent } from './fuse-selection/fuse-selection.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'persona/:persona',
     component: PersonaComponent
+  },
+  {
+    path: 'fusion',
+    component: FuseSelectionComponent
   }
 ];
 
