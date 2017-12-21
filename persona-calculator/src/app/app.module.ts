@@ -15,6 +15,7 @@ import { PersonaPipe } from './persona.pipe';
 import { FusionListComponent } from './fusion-list/fusion-list.component';
 import { RecipeComponent } from './recipe/recipe.component';
 import { FuseSelectionComponent } from './fuse-selection/fuse-selection.component';
+import { SkillComponent } from './skill/skill.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { FuseSelectionComponent } from './fuse-selection/fuse-selection.componen
     FusionListComponent,
     RecipeComponent,
     FuseSelectionComponent,
+    SkillComponent,
   ],
   imports: [
     BrowserModule,
