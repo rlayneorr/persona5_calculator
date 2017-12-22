@@ -34,11 +34,11 @@ export class PersonaComponent implements OnInit {
           this.persona = p;
           this.level = p.level;
           const skills = Object.getOwnPropertyNames(this.persona.skills);
-          skills.forEach(s => 
+          skills.forEach(s =>
             this.skillService.getSkill(s).subscribe(
               skill => this.skills.push(skill)
             )
-          )
+          );
         }
       );
     }

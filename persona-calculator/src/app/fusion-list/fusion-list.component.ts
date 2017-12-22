@@ -25,6 +25,7 @@ export class FusionListComponent implements OnInit {
   getRecipes(): Recipe[] {
     let result: Recipe[];
     this.fusionService.getAllResultingRecipesFrom(this.persona).subscribe(recipes => result = recipes);
+    console.log(result);
     return result;
   }
 }

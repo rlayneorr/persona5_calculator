@@ -279,8 +279,9 @@ export class FusionService implements OnInit {
       arcanaCombos => {
         // fuse 2 persona normally (including down-rank)
         for (let i = 0, combo = null; combo = arcanaCombos[i]; i++) {
-          const personae1 = this.personaByArcana[combo.source[0]];
-          const personae2 = this.personaByArcana[combo.source[1]];
+          // todo: Check to make sure that this is what I was supposed to do
+          const personae1 = arcanaCombos[combo.source[0]];
+          const personae2 = arcanaCombos[combo.source[1]];
           for (let j = 0, persona1 = null; persona1 = personae1[j]; j++) {
             for (let k = 0, persona2 = null; persona2 = personae2[k]; k++) {
               // for same arcana fusion only consider k > j to avoid duplicates
